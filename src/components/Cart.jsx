@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'; // Make sure to import Link from react-router-dom
+import { ThemeContext } from '../context/ThemeContext';
 
 const Cart = ({ item }) => {
+
+  const {theme} = useContext(ThemeContext);
   const { id, thumbnail, category, title, price } = item;
 
   return (
     <Link
       to={`/products/${id}`}
       className="lg:w-1/4 md:w-1/2 p-4 w-full shadow"
+
     >
-      <div>
+      <div  
+      
+      className={`${theme == 'light' ? "bg-white  text-black" : "bg-zinc-700 text-white"}`}
+
+      >
         <a className="block relative h-48 rounded overflow-hidden">
           <img
             alt="ecommerce"
