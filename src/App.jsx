@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import About from "./pages/About";
-import ProductDetails from "./pages/ProductDetails";
+import ProductDetail from "./pages/ProductDetail";
 
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product" element={<Product />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/about" element={<About/>} />
         </Routes>
       </BrowserRouter>

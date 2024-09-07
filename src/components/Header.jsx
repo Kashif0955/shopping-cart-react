@@ -11,16 +11,16 @@ const Header = () => {
   };
 
   return (
-    <header className={`flex justify-between items-center p-4 border-b ${theme === "light" ? "bg-white text-black border-gray-200" : "bg-gray-800 text-white border-gray-700"}`}>
+    <header className={`flex justify-between items-center p-2.5 px-5 ${theme === "light" ? "bg-gray-800 text-white" : "bg-gray-900 text-gray-100"}`}>
       <div className="logo">
-        <h1 className="text-3xl font-extrabold">MyStore</h1>
+        <h1 className={`text-2xl font-bold m-0 ${theme === "light" ? "text-white" : "text-gray-100"}`}>MKStore</h1>
       </div>
       <nav className="nav">
-        <ul className="flex space-x-6 items-center">
+        <ul className={`flex space-x-4 list-none p-0 m-0 ${theme === "light" ? "text-gray-200" : "text-gray-300"}`}>
           <li>
             <Link 
               to="/" 
-              className={`transition-colors duration-300 ${theme === 'light' ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'}`}
+              className={`no-underline ${theme === 'light' ? 'text-gray-200 hover:text-gray-400' : 'text-gray-300 hover:text-gray-400'}`}
             >
               Home
             </Link>
@@ -28,7 +28,7 @@ const Header = () => {
           <li>
             <Link 
               to="/product" 
-              className={`transition-colors duration-300 ${theme === 'light' ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'}`}
+              className={`no-underline ${theme === 'light' ? 'text-gray-200 hover:text-gray-400' : 'text-gray-300 hover:text-gray-400'}`}
             >
               Products
             </Link>
@@ -36,7 +36,7 @@ const Header = () => {
           <li>
             <Link 
               to="/about" 
-              className={`transition-colors duration-300 ${theme === 'light' ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'}`}
+              className={`no-underline ${theme === 'light' ? 'text-gray-200 hover:text-gray-400' : 'text-gray-300 hover:text-gray-400'}`}
             >
               About
             </Link>
