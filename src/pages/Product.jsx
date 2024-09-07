@@ -4,8 +4,10 @@ import Cart from "../components/Cart";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // Initialize as boolean
-  const [notFound, setNotFound] = useState(false); // Initialize as boolean
+  const [categories, setCatergories] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     axios
@@ -22,6 +24,19 @@ const Product = () => {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("https://dummyjson.com/products/categories")
+      .then((res) => {
+        setCategories(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -29,10 +44,23 @@ const Product = () => {
       ) : notFound ? (
         <h3>Products not found.</h3>
       ) : (
-        <div className="flex flex-wrap -m-4 my-4">
-          {products.map((product) => (
-            <Cart item={product} key={product.id} />
-          ))}
+        <div>
+
+<div className="flex gap-3 flex-wrap">
+
+  {
+    categories.map((category)=>{
+      <CategotryChip/>
+    })
+  }
+
+</div>
+
+          <div className="flex flex-wrap -m-4 my-4">
+            {products.map((product) => (
+              <Cart item={product} key={product.id} />
+            ))}
+          </div>
         </div>
       )}
     </>

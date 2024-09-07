@@ -11,57 +11,50 @@ const Header = () => {
   };
 
   return (
-    <header className={`flex justify-between items-center p-4 ${theme === "light" ? "bg-amber-50 text-black" : "bg-zinc-700 text-white"}`}>
+    <header className={`flex justify-between items-center p-4 border-b ${theme === "light" ? "bg-white text-black border-gray-200" : "bg-gray-800 text-white border-gray-700"}`}>
       <div className="logo">
-        <h1 className="text-2xl font-bold">MyStore</h1>
+        <h1 className="text-3xl font-extrabold">MyStore</h1>
       </div>
       <nav className="nav">
-        <ul className="flex space-x-4">
+        <ul className="flex space-x-6 items-center">
           <li>
-            <Link to="/" className="hover:text-gray-400">
+            <Link 
+              to="/" 
+              className={`transition-colors duration-300 ${theme === 'light' ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'}`}
+            >
               Home
             </Link>
           </li>
           <li>
-            <Link to="/product" className="hover:text-gray-400">
+            <Link 
+              to="/product" 
+              className={`transition-colors duration-300 ${theme === 'light' ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'}`}
+            >
               Products
             </Link>
           </li>
           <li>
-            <Link to="/about" className="hover:text-gray-400">
+            <Link 
+              to="/about" 
+              className={`transition-colors duration-300 ${theme === 'light' ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'}`}
+            >
               About
             </Link>
           </li>
-          <li>
+          <li className="flex items-center">
             <button 
-              onClick={() => {
-                if (theme === "light") {
-                  setTheme("dark");
-                } else {
-                  setTheme("light");
-                }
-              }}
-              className={`${
-                theme == "light"
-                  ? "bg-slate-700 text-white"
-                  : "bg-white text-black"
+              onClick={toggleTheme}
+              className={`py-2 px-4 rounded-md focus:outline-none transition-colors duration-300 ${
+                theme === "light"
+                  ? "bg-gray-700 text-white hover:bg-gray-600"
+                  : "bg-gray-300 text-black hover:bg-gray-200"
               }`}
-              // className="bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600"
             >
-              Theme
+              {theme === "light" ? "Dark" : "Light"} Theme
             </button>
           </li>
         </ul>
       </nav>
-      {/* <div className="cart">
-        <a href="#cart">
-          <img
-            src="https://image.shutterstock.com/image-vector/shopping-cart-icon-260nw-1043647820.jpg"
-            alt="Cart"
-            className="w-8 h-8"
-          />
-        </a>
-      </div> */}
     </header>
   );
 };
