@@ -2,8 +2,12 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext'; // Adjust path as necessary
 import { MdShoppingCart } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+
+  const {cartItems} = useSelector((state) => state.cart); 
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const { theme, setTheme } = useContext(ThemeContext); // Access theme and setTheme from context
@@ -78,7 +82,7 @@ const Navbar = () => {
 
               
                 <span className="bg-red-500 text-white rounded-full px-2 py-0.5 text-xs absolute -top-1 -right-3">
-                  0
+                 {cartItems.length}
                 </span>
               </Link>
             </li>

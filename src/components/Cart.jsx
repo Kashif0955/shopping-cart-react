@@ -1,18 +1,20 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { ThemeContext } from '../context/ThemeContext';
+import React from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import { Link } from "react-router-dom";
 
-const Cart = ({ item }) => {
+const Cart = ({ productid, title, price, category, thumbnail, handler }) => {
   const { theme } = useContext(ThemeContext);
-  const { id, thumbnail, category, title, price } = item;
 
   return (
     <Link
-      to={`/products/${id}`}
+      to={`/products/${productid}`}
       className={`lg:w-1/4 md:w-1/2 w-full p-4 transform transition-transform duration-300 hover:scale-105`}
     >
       <div
-        className={`bg-${theme === 'light' ? 'white text-black' : 'zinc-800 text-white'} shadow-lg rounded-lg overflow-hidden`}
+        className={`bg-${
+          theme === "light" ? "white text-black" : "zinc-800 text-white"
+        } shadow-lg rounded-lg overflow-hidden`}
       >
         <div className="relative h-48">
           <img
@@ -22,15 +24,46 @@ const Cart = ({ item }) => {
           />
         </div>
         <div className="p-4">
-          <h3 className={`text-xs tracking-widest ${theme === 'light' ? 'text-black-500' : 'text-white-400'}`}>
+          <h3
+            className={`text-xs tracking-widest ${
+              theme === "light" ? "text-black-500" : "text-white-400"
+            }`}
+          >
             {category}
           </h3>
-          <h2 className={`text-lg font-semibold mt-1 ${theme === 'light' ? 'text-gray-900' : 'text-white-100'}`}>
+          <h2
+            className={`text-lg font-semibold mt-1 ${
+              theme === "light" ? "text-gray-900" : "text-white-100"
+            }`}
+          >
             {title}
           </h2>
-          <p className={`mt-1 text-xl font-semibold ${theme === 'light' ? 'text-gray-900' : 'text-white-300'}`}>
+          <p
+            className={`mt-1 text-xl font-semibold ${
+              theme === "light" ? "text-gray-900" : "text-white-300"
+            }`}
+          >
             ${price}
           </p>
+          <button
+            className={`flex ml-auto text-white border-0 py-2 px-6 focus:outline-none ${
+              theme === "light"
+                ? "bg-indigo-500 hover:bg-indigo-600"
+                : "bg-indigo-700 hover:bg-indigo-800"
+            } rounded`}
+            onClick={() =>
+              handler({
+                title,
+                price,
+                category,
+                thumbnail,
+                productid,
+                quantity: 1,
+              })
+            }
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </Link>
