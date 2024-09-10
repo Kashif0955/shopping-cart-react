@@ -1,9 +1,8 @@
 import { useParams } from "react-router";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import axios from "axios";
-
 
 function ProductDetail({ handler }) {
   const { id } = useParams();
@@ -30,7 +29,7 @@ function ProductDetail({ handler }) {
   return (
     <div
       className={`container mx-auto ${
-        theme === "light" ? "bg-gray-100 " : "bg-gray-900 text-white"
+        theme === "light" ? "bg-gray-100 text-gray-900" : "bg-gray-900 text-white"
       }`}
     >
       {loading ? (
@@ -52,9 +51,7 @@ function ProductDetail({ handler }) {
       ) : (
         <section
           className={`text-gray-600 body-font overflow-hidden ${
-            theme === "light"
-              ? "bg-white text-gray-900"
-              : "bg-gray-800 text-gray-200"
+            theme === "light" ? "bg-white text-gray-900" : "bg-gray-800 text-gray-200"
           }`}
         >
           <div className="container px-5 py-24 mx-auto">
@@ -90,7 +87,7 @@ function ProductDetail({ handler }) {
                   <span
                     className={`${
                       theme === "light" ? "text-gray-500" : "text-gray-400"
-                    } ml-auto text-gray-900`}
+                    } ml-auto`}
                   >
                     Blue
                   </span>
@@ -110,7 +107,7 @@ function ProductDetail({ handler }) {
                   <span
                     className={`${
                       theme === "light" ? "text-gray-500" : "text-gray-400"
-                    } ml-auto text-gray-900`}
+                    } ml-auto`}
                   >
                     Medium
                   </span>
@@ -130,7 +127,7 @@ function ProductDetail({ handler }) {
                   <span
                     className={`${
                       theme === "light" ? "text-gray-500" : "text-gray-400"
-                    } ml-auto text-gray-900`}
+                    } ml-auto`}
                   >
                     4
                   </span>
@@ -143,25 +140,25 @@ function ProductDetail({ handler }) {
                   >
                     ${product.price}
                   </span>
-                  {/* <button
+                  <button
                     className={`flex ml-auto text-white border-0 py-2 px-6 focus:outline-none ${
                       theme === "light"
                         ? "bg-indigo-500 hover:bg-indigo-600"
-                        : "bg-indigo-700 hover:bg-indigo-800"
+                        : "bg-indigo-500 hover:bg-indigo-600"
                     } rounded`}
                     onClick={() =>
                       handler({
-                        productid : product.productid, // Use `product.id` from the product object
-                        title:product.title,
-                        price:product.price,
-                        category:product.category,
-                        thumbnail:product.thumbnail,
+                        productid: product.id, // Use `product.id` from the product object
+                        title: product.title,
+                        price: product.price,
+                        category: product.category,
+                        thumbnail: product.thumbnail,
                         quantity: 1,
                       })
                     }
                   >
                     Add to Cart
-                  </button> */}
+                  </button>
                   <button
                     className={`rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center ${
                       theme === "light" ? "text-gray-500" : "text-gray-400"
@@ -194,4 +191,5 @@ function ProductDetail({ handler }) {
     </div>
   );
 }
+
 export default ProductDetail;

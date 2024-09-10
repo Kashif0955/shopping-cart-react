@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { userContext } from '../context/userContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -27,29 +28,32 @@ const Navbar = () => {
   };
 
   const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      // Handle post-signout actions like redirecting to login
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
+    await signOut(auth);
   };
 
   return (
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-70 transition-opacity duration-500 ${
-          overlayVisible ? 'opacity-100 z-50' : 'opacity-0 z-[-1]'
-        }`}
+        className={`fixed inset-0 bg-black bg-opacity-70 transition-opacity duration-500 ${overlayVisible ? 'opacity-100 z-50' : 'opacity-0 z-[-1]'}`}
+        onClick={handleSidebarToggle}
       ></div>
 
       {/* Utility Nav */}
       <div className="hidden md:block bg-gray-200 py-2">
-        <div className="container mx-5 my-1 flex justify-between items-center">
-          <p className="text-sm">
-            <i className="bx bx-envelope"></i> mk.store@gmail.com |{' '}
-            <i className="bx bx-phone"></i> +92-9876543210
+        <div className="container mx-auto flex justify-between items-center">
+          <p className="text-sm flex items-center space-x-2">
+            {user.isLogin ? (
+              <span className="mr-4 font-medium">{user.userInfo?.email}</span>
+            ) : (
+              <>
+                <i className="bx bx-envelope text-blue-500 mr-1"></i>
+                <span>mk.store@gmail.com</span>
+                <span className="mx-2">|</span>
+                <i className="bx bx-phone text-green-500 mr-1"></i>
+                <span>+92-9876543210</span>
+              </>
+            )}
           </p>
         </div>
       </div>
@@ -73,20 +77,22 @@ const Navbar = () => {
             MK Store
           </Link>
 
-          <form className="flex mx-auto space-x-2">
-            <input
-              className="py-2 px-4 border rounded-l-md focus:outline-none"
-              type="search"
-              placeholder="Search for products..."
-              aria-label="Search"
-            />
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded-r-md"
-              type="submit"
-            >
-              <i className="bx bx-search"></i>
-            </button>
-          </form>
+          <div className="hidden md:flex flex-grow">
+            <form className="flex mx-auto space-x-2 w-full max-w-lg">
+              <input
+                className="py-2 px-4 border rounded-l-md focus:outline-none w-full"
+                type="search"
+                placeholder="Search for products..."
+                aria-label="Search"
+              />
+              <button
+                className="bg-green-500 text-white py-2 px-4 rounded-r-md"
+                type="submit"
+              >
+                <i className="bx bx-search"></i>
+              </button>
+            </form>
+          </div>
 
           <ul className="flex items-center space-x-4">
             <li>
@@ -97,40 +103,32 @@ const Navbar = () => {
                 </span>
               </Link>
             </li>
-            {user ? (
-              <li>
-                <div className="flex items-center">
-                  <h1 className="mr-4 font-medium">{user.userInfo?.email}</h1>
-                  <img
-                    src={user.userInfo?.photoUrl || '/default-avatar.png'} // Fallback image
-                    alt="User Avatar"
-                    className="w-10 h-10 rounded-full mx-4"
-                  />
-                  <button
-                    onClick={handleSignOut}
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </li>
+            {user.isLogin ? (
+              <div className="flex items-center">
+                <h1 className="mr-4 font-medium">{user.userInfo?.email}</h1>
+                <FaUserCircle className="text-gray-600 text-2xl hover:text-blue-500 transition duration-300 mx-3" />
+                <button
+                  onClick={handleSignOut}
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                >
+                  Logout
+                </button>
+              </div>
             ) : (
-              <li>
-                <div className="flex space-x-4">
-                  <Link
-                    to="/login"
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
-                  >
-                    Signup
-                  </Link>
-                </div>
-              </li>
+              <div className="flex space-x-4">
+                <Link
+                  to="/login"
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                >
+                  Signup
+                </Link>
+              </div>
             )}
             <li>
               <button
@@ -148,22 +146,31 @@ const Navbar = () => {
       <nav
         className={`${
           theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
-        } shadow-md`}
+        } shadow-md py-5`}
       >
         <div className="container mx-auto">
           <ul className="flex justify-center space-x-4">
             <li>
-              <Link className="border-b-2 border-blue-500" to="/">
+              <Link
+                className="border-b-2 border-transparent hover:border-blue-500 transition-all duration-300"
+                to="/"
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link className="text-gray-600" to="/products">
+              <Link
+                className="border-b-2 border-transparent hover:border-blue-500 transition-all duration-300"
+                to="/products"
+              >
                 Products
               </Link>
             </li>
             <li>
-              <Link className="text-gray-600" to="/contact">
+              <Link
+                className="border-b-2 border-transparent hover:border-blue-500 transition-all duration-300"
+                to="/contact"
+              >
                 Contact
               </Link>
             </li>
@@ -176,13 +183,13 @@ const Navbar = () => {
         <div className="container mx-auto">
           <form className="flex space-x-2">
             <input
-              className="py-2 px-4 border rounded-l-md focus:outline-none"
+              className="py-2 px-4 border rounded-l-md focus:outline-none w-full"
               type="search"
               placeholder="Search for products..."
               aria-label="Search"
             />
             <button
-              className="bg-green-500 text-white py-2 px-4 rounded-r-md focus:outline-none"
+              className="bg-green-500 text-white py-2 px-4 rounded-r-md"
               type="submit"
             >
               <i className="bx bx-search"></i>
@@ -193,9 +200,7 @@ const Navbar = () => {
 
       {/* Sidebar */}
       <nav
-        className={`fixed inset-0 bg-white shadow-lg transform transition-transform duration-500 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } z-50`}
+        className={`fixed inset-0 bg-white shadow-lg transform transition-transform duration-500 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} z-50`}
       >
         <div className="p-4">
           <div className="flex justify-between items-center">
@@ -236,6 +241,68 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
+
+      <style jsx>{`
+        /* Mobile styles */
+        @media (max-width: 639px) {
+          .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+
+          .navbar {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+
+          .navbar ul {
+            flex-direction: column;
+            margin-top: 1rem;
+          }
+
+          .navbar ul li {
+            margin: 0.5rem 0;
+          }
+
+          .search-bar {
+            display: flex;
+            flex-direction: column;
+            margin-top: 1rem;
+          }
+
+          .search-bar input {
+            margin-bottom: 0.5rem;
+          }
+        }
+
+        /* Tablet and Desktop styles */
+        @media (min-width: 640px) {
+          .container {
+            padding-left: 2rem;
+            padding-right: 2rem;
+          }
+
+          .navbar {
+            flex-direction: row;
+            align-items: center;
+          }
+
+          .navbar ul {
+            flex-direction: row;
+          }
+
+          .search-bar {
+            display: flex;
+            flex-direction: row;
+            margin-top: 0;
+          }
+
+          .search-bar input {
+            margin-bottom: 0;
+          }
+        }
+      `}</style>
     </>
   );
 };

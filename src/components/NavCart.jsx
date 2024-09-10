@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavCartDetails from "./NavCartDetails";
 import { useSelector, useDispatch } from "react-redux";
+import { ThemeContext } from "../context/ThemeContext"; // Adjust path as necessary
 
 const NavCart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const { theme } = useContext(ThemeContext); // Access theme from context
 
   const increment = (id) => {
     if (id) {
@@ -39,12 +41,16 @@ const NavCart = () => {
     }
   };
 
+  const themeStyles = theme === 'dark'
+    ? 'bg-gray-800 text-white'
+    : 'bg-white text-gray-800';
+
   return (
-    <>
+    <div className={`p-4 ${themeStyles}`}>
       {cartItems.length > 0 ? (
         cartItems.map((item) => (
           <NavCartDetails
-            key={item.id} // Ensure this is unique for each item
+            key={item.id}
             thumbnail={item.thumbnail}
             title={item.title}
             category={item.category}
@@ -57,9 +63,9 @@ const NavCart = () => {
           />
         ))
       ) : (
-        <h2>Cart is empty</h2>
+        <h2 className="text-center">Cart is empty</h2>
       )}
-    </>
+    </div>
   );
 };
 

@@ -7,7 +7,6 @@ import Product from "./pages/Product";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import NavCart from "./components/NavCart";
-import Form from "./pages/LoginForm";
 import './App.css'
 import LoginForm from "./pages/LoginForm";
 import RegistrationForm from "./pages/RegistrationForm";
