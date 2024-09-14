@@ -63,3 +63,5 @@ const Cart = ({ productid, title, price, category, thumbnail, handler }) => {
 };
 
 export default Cart;
+
+
